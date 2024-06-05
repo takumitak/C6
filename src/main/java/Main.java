@@ -18,6 +18,7 @@ import java.io.IOException;
 
 class WrongStudentName extends Exception { }
 class WrongStudentAge extends Exception { }
+class WrongStudentDate extends Exception { }
 
 class Main {
     public static Scanner scan = new Scanner(System.in);
@@ -40,6 +41,11 @@ class Main {
             catch(WrongStudentAge e) {
                 System.out.println("Błędne wiek studenta!");
             }
+            catch(WrongStudentDate e) {
+                System.out.println("Błędna data urodzenia studenta!");
+            }
+
+
         }
     }
 
@@ -68,16 +74,39 @@ class Main {
         if(age < 0 || age > 100)
             throw new WrongStudentAge();
         return age;
-        
     } 
 
-    public static void exercise1() throws IOException, WrongStudentName, WrongStudentAge {
+    public static int PobierzDataDzien() throws WrongStudentDate{
+        System.out.println("Podaj dzień uridzenia: ");
+        int dzien = scan.nextInt();
+        if(dzien < 0 || dzien > 31)
+            throw new WrongStudentDate();
+        return dzien;
+    }
+
+    public static int PobierzDataMiesiac() throws WrongStudentDate{
+        System.out.println("Podaj miesiąc uridzenia: ");
+        int miesiac = scan.nextInt();
+        if(miesiac < 0 || miesiac > 12)
+            throw new WrongStudentDate();
+        return miesiac;
+    }
+
+    public static int PobierzDataRok() throws WrongStudentDate{
+        System.out.println("Podaj rok uridzenia: ");
+        int rok = scan.nextInt();
+        if(rok < 0 || rok > 2023)
+            throw new WrongStudentDate();
+        return rok;
+    }
+
+    public static void exercise1() throws IOException, WrongStudentName, WrongStudentAge, WrongStudentDate {
         var name = ReadName();
         var age = PobierzWiek();
-        scan.nextLine();
-        System.out.println("Podaj datę urodzenia DD-MM-YYY");
-        var date = scan.nextLine();
-        (new Service()).addStudent(new Student(name, age, date));
+        var dzien = PobierzDataDzien();
+        var miesiac = PobierzDataMiesiac();
+        var rok = PobierzDataRok();
+        (new Service()).addStudent(new Student(name, age,dzien,miesiac,rok ));;
     }
 
     public static void exercise2() throws IOException {
