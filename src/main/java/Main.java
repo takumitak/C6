@@ -19,6 +19,7 @@ import java.io.IOException;
 class WrongStudentName extends Exception { }
 class WrongStudentAge extends Exception { }
 class WrongStudentDate extends Exception { }
+class WrongMenu extends Exception { }
 
 class Main {
     public static Scanner scan = new Scanner(System.in);
@@ -44,18 +45,23 @@ class Main {
             catch(WrongStudentDate e) {
                 System.out.println("Błędna data urodzenia studenta!");
             }
+            catch(WrongMenu e) {
+                System.out.println("Niepoprawny wybór!");
+            }
 
 
         }
     }
-
-    public static int menu() {
+    public static int menu() throws WrongMenu {
         System.out.println("Wciśnij:");
         System.out.println("1 - aby dodać studenta");
         System.out.println("2 - aby wypisać wszystkich studentów");
         System.out.println("3 - aby wyszukać studenta po imieniu");
         System.out.println("0 - aby wyjść z programu");
-        return scan.nextInt();
+        int ex=scan.nextInt();
+        if(ex<0 || ex>3)
+            throw new WrongMenu();
+        return ex;
     }
 
     public static String ReadName() throws WrongStudentName {
